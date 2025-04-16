@@ -1,4 +1,4 @@
-import uk.gov.hmrc.DefaultBuildSettings.{integrationTestSettings, targetJvm}
+import uk.gov.hmrc.DefaultBuildSettings.{integrationTestSettings}
 
 lazy val scoverageSettings = {
   import scoverage.ScoverageKeys
@@ -14,8 +14,7 @@ lazy val microservice = Project("digital-disclosure-service-store", file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .settings(
     majorVersion        := 0,
-    scalaVersion        := "2.13.12",
-    targetJvm           := "jvm-11",
+    scalaVersion        := "2.13.16",
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     libraryDependencySchemes ++= Seq(
       "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always,
