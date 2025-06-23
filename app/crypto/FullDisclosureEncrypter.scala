@@ -20,12 +20,16 @@ import com.google.inject.{Inject, Singleton}
 import models.disclosure._
 import models.store.FullDisclosure
 import models.EncryptedFullDisclosure
+import uk.gov.hmrc.crypto.{AesGcmAdCrypto, EncryptedValue}
+import config.AppConfig
 
 @Singleton
 class FullDisclosureEncrypter @Inject() (
-  crypto: SecureGCMCipher,
-  notificationEncrypter: NotificationEncrypter
+  notificationEncrypter: NotificationEncrypter,
+  appConfig: AppConfig
 ) {
+
+  private val crypto = new AesGcmAdCrypto(appConfig.mongoEncryptionKey)
 
   def encryptFullDisclosure(fullDisclosure: FullDisclosure, sessionId: String): EncryptedFullDisclosure =
     EncryptedFullDisclosure(

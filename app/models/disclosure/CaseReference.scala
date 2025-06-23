@@ -16,8 +16,9 @@
 
 package models.disclosure
 
-import play.api.libs.json.{Json, OFormat}
-import crypto.EncryptedValue
+import play.api.libs.json.{Format, Json, OFormat}
+import uk.gov.hmrc.crypto.EncryptedValue
+import uk.gov.hmrc.crypto.json.CryptoFormats
 
 final case class CaseReference(
   doYouHaveACaseReference: Option[Boolean] = None,
@@ -34,5 +35,6 @@ final case class EncryptedCaseReference(
 )
 
 object EncryptedCaseReference {
-  implicit val format: OFormat[EncryptedCaseReference] = Json.format[EncryptedCaseReference]
+  implicit val encryptedValueFormat: Format[EncryptedValue] = CryptoFormats.encryptedValueFormat
+  implicit val format: OFormat[EncryptedCaseReference]      = Json.format[EncryptedCaseReference]
 }

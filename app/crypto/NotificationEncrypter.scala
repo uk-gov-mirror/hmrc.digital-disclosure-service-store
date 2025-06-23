@@ -22,9 +22,13 @@ import models.EncryptedNotification
 import models.notification._
 import models.address._
 import java.time.LocalDate
+import uk.gov.hmrc.crypto.{AesGcmAdCrypto, EncryptedValue}
+import config.AppConfig
 
 @Singleton
-class NotificationEncrypter @Inject() (crypto: SecureGCMCipher) {
+class NotificationEncrypter @Inject() (appConfig: AppConfig) {
+
+  private val crypto = new AesGcmAdCrypto(appConfig.mongoEncryptionKey)
 
   def encryptNotification(notification: Notification, sessionId: String): EncryptedNotification =
     EncryptedNotification(
